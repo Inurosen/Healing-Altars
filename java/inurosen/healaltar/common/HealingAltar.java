@@ -13,7 +13,7 @@ public class HealingAltar
 {
     public static final String NAME = "Healing Altar";
     public static final String MODID = "healaltar";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.0.1";
     public static long lastUse = 0;
 
     @EventHandler

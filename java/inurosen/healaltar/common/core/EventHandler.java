@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -71,13 +72,13 @@ public class EventHandler
                 }
 
                 // Altar heads
-                if(world.getBlock(x - 1, y + 1, z - 1) == Blocks.skull)
+                if(world.getTileEntity(x - 1, y + 1, z - 1) instanceof TileEntitySkull)
                 {
-                    if(world.getBlock(x + 1, y + 1, z - 1) == Blocks.skull)
+                    if(world.getTileEntity(x + 1, y + 1, z - 1) instanceof TileEntitySkull)
                     {
-                        if(world.getBlock(x - 1, y + 1, z + 1) == Blocks.skull)
+                        if(world.getTileEntity(x - 1, y + 1, z + 1) instanceof TileEntitySkull)
                         {
-                            if(world.getBlock(x + 1, y + 1, z + 1) == Blocks.skull)
+                            if(world.getTileEntity(x + 1, y + 1, z + 1) instanceof TileEntitySkull)
                             {
                                 tier = 2;
                             }

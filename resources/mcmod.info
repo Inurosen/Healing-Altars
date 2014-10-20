@@ -1,0 +1,21 @@
+[
+{
+  "modid" : "healaltar",
+  "name" : "Healing Altar",
+  "version" : "${version}",
+  "url" : "http://twitter.com/inurosen",
+  "credits" : "",
+  "authors": [
+    "Inurosen"
+  ],
+  "description": "Mod is made to cover the gap for early game healing in hardcore worlds.",
+  "logoFile" : "",
+  "updateUrl" : "",
+  "parent" : "",
+  "screenshots": [
+  ],
+  "dependancies": [
+    "Forge"
+  ]
+}
+]

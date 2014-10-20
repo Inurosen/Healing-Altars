@@ -18,7 +18,6 @@ public class EventHandler
     public void eggThrowToTheMoon(PlayerInteractEvent event)
     {
         if( event.entityPlayer.getHeldItem() == null) return;
-
         Item egg = event.entityPlayer.getHeldItem().getItem();
         World world = event.entityPlayer.worldObj;
         EntityPlayer player = event.entityPlayer;
@@ -41,6 +40,7 @@ public class EventHandler
             int x = (int) Math.floor(player.posX);
             int y = (int) (player.posY - player.getYOffset()) - 1;
             int z = (int) Math.floor(player.posZ);
+
             if(Helper.getHighestBlockAt(world, x, y, z) == Blocks.lapis_block)
             {
                 // Altar body

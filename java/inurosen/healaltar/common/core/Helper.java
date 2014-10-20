@@ -21,10 +21,9 @@ public class Helper
         int h = world.getHeight();
         for(int i = y; i <= h; i++)
         {
-            Block cur = world.getBlock(x, i, z);
-            if(cur != Blocks.air)
+            if(!world.isAirBlock(x, i, z))
             {
-                b = cur;
+                b = world.getBlock(x, i, z);
             }
         }
         return b;

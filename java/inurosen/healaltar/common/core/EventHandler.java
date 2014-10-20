@@ -17,6 +17,8 @@ public class EventHandler
     @SubscribeEvent
     public void eggThrowToTheMoon(PlayerInteractEvent event)
     {
+        if( event.entityPlayer.getHeldItem() == null) return;
+
         Item egg = event.entityPlayer.getHeldItem().getItem();
         World world = event.entityPlayer.worldObj;
         EntityPlayer player = event.entityPlayer;

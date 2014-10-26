@@ -71,7 +71,7 @@ public class EggProjectile extends EntityEgg
                 flesh4.delayBeforeCanPickup = 25;
                 flesh4.fireResistance = 100;
                 flesh4.setVelocity(Helper.randRange(.0F, .4F), .1F, Helper.randRange(.0F, .4F));
-                world.spawnEntityInWorld(flesh3);
+                world.spawnEntityInWorld(flesh4);
 
             }
             EntityPlayer player = world.getClosestPlayer(posX, posY-2, posZ, 2);

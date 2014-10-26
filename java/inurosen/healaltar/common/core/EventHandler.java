@@ -3,17 +3,50 @@ package inurosen.healaltar.common.core;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import inurosen.healaltar.common.HealingAltar;
 import inurosen.healaltar.common.entity.EggProjectile;
+import inurosen.healaltar.common.entity.EntityWaterBucket;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.item.ItemTossEvent;
 
 public class EventHandler
 {
+    @SubscribeEvent
+    public void onItemToss(ItemTossEvent event)
+    {
+        if(Config.enableRainAltar)
+        {
+            EntityItem entityItem = event.entityItem;
+            World world = event.player.worldObj;
+            long now = world.getTotalWorldTime();
+            long diff;
+            if( now < 72000 && HealingAltar.lastRain == 0 )
+            {
+                diff = 72000;
+            }
+            else
+            {
+                diff = now - HealingAltar.lastRain;
+            }
+
+            if( !world.isRemote && diff >= 72000 && entityItem.getEntityItem().getItem().delegate.name().equals("minecraft:water_bucket") )
+            {
+                EntityWaterBucket bucket = new EntityWaterBucket( world, entityItem.posX, entityItem.posY, entityItem.posZ, new ItemStack(Items.water_bucket, 1) );
+                bucket.delayBeforeCanPickup = 25;
+                bucket.fireResistance = 100;
+                bucket.setVelocity(entityItem.motionX, entityItem.motionY, entityItem.motionZ);
+                world.spawnEntityInWorld(bucket);
+                event.setCanceled(true);
+            }
+        }
+    }
 
     @SubscribeEvent
     public void eggThrowToTheMoon(PlayerInteractEvent event)
@@ -27,7 +60,7 @@ public class EventHandler
         long time = world.getWorldTime();
         long now = world.getTotalWorldTime();
         long diff;
-        if( now < 10800 )
+        if( now < 10800 && HealingAltar.lastUse == 0)
         {
             diff = 10800;
         }

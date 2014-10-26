@@ -1,6 +1,6 @@
 [
 {
-  "modid" : "healaltar",
+  "modid" : "HealingAltar",
   "name" : "Healing Altar",
   "version" : "${version}",
   "url" : "http://twitter.com/inurosen",

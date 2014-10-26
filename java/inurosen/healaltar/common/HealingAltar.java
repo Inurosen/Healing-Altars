@@ -12,9 +12,10 @@ import inurosen.healaltar.common.core.Config;
 public class HealingAltar
 {
     public static final String NAME = "Healing Altar";
-    public static final String MODID = "healaltar";
-    public static final String VERSION = "1.0.1";
+    public static final String MODID = "HealingAltar";
+    public static final String VERSION = "1.1";
     public static long lastUse = 0;
+    public static long lastRain = 0;
 
     @EventHandler
     public static void preInit ( FMLPreInitializationEvent event ) {

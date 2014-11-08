@@ -1,5 +1,6 @@
 package inurosen.healaltar.common.entity;
 
+import inurosen.healaltar.common.HealingAltar;
 import inurosen.healaltar.common.core.Config;
 import inurosen.healaltar.common.core.Helper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,11 +80,11 @@ public class EggProjectile extends EntityEgg
             {
                 if( world.isThundering() && Config.thunderAmplify )
                 {
-                    player.addPotionEffect(new PotionEffect(Potion.regeneration.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier + 1 ));
+                    player.addPotionEffect(new PotionEffect(HealingAltar.soulRegen.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier + 1 ));
                 }
                 else
                 {
-                    player.addPotionEffect(new PotionEffect(Potion.regeneration.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier ));
+                    player.addPotionEffect(new PotionEffect(HealingAltar.soulRegen.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier ));
                 }
             }
             for(int i = 0; i < 6; i++)

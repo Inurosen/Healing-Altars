@@ -4,6 +4,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import inurosen.healaltar.common.HealingAltar;
 import inurosen.healaltar.common.entity.EggProjectile;
 import inurosen.healaltar.common.entity.EntityWaterBucket;
+import inurosen.healaltar.common.entity.ExtendedPlayer;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -13,6 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 
@@ -60,13 +65,13 @@ public class EventHandler
         long time = world.getWorldTime();
         long now = world.getTotalWorldTime();
         long diff;
-        if( now < 10800 && HealingAltar.lastUse == 0)
+        if( now < 10800 && ExtendedPlayer.get(player).lastRitual == 0)
         {
             diff = 10800;
         }
         else
         {
-            diff = now - HealingAltar.lastUse;
+            diff = now - ExtendedPlayer.get(player).lastRitual;
         }
         Vec3 look = player.getLookVec();
         if( !world.isRemote && diff >= 10800 && time >= 17500 && time <= 18500 && egg == Items.egg && look.yCoord == 1)
@@ -121,7 +126,7 @@ public class EventHandler
 
                 if(validAltar)
                 {
-                    HealingAltar.lastUse = now;
+                    ExtendedPlayer.get(player).lastRitual = now;
                     EggProjectile eggShot = new EggProjectile( world, player.posX, y + 4, player.posZ, new Integer[]{x, y, z}, tier);
                     world.spawnEntityInWorld(eggShot);
                     eggShot.setVelocity(0, 1.5, 0);
@@ -130,4 +135,54 @@ public class EventHandler
             }
         }
     }
+
+    @SubscribeEvent
+    public void onEntityConstructing(EntityEvent.EntityConstructing event)
+    {
+        if (event.entity instanceof EntityPlayer)
+        {
+            if (ExtendedPlayer.get((EntityPlayer) event.entity) == null)
+                ExtendedPlayer.register((EntityPlayer) event.entity);
+        }
+    }
+
+    @SubscribeEvent
+    public void onEntityJoinWorld(EntityJoinWorldEvent event)
+    {
+        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
+            ExtendedPlayer.loadProxyData((EntityPlayer) event.entity);
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingDeathEvent(LivingDeathEvent event)
+    {
+        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer) {
+            ExtendedPlayer.get((EntityPlayer) event.entity).setSoulHearts(0);
+            ExtendedPlayer.saveProxyData((EntityPlayer) event.entity);
+        }
+    }
+
+    @SubscribeEvent
+    public void onLivingHurtEvent(LivingHurtEvent event)
+    {
+        if (!event.entity.worldObj.isRemote && event.entity instanceof EntityPlayer)
+        {
+            float damage = event.ammount;
+            float soulHearts = ExtendedPlayer.get((EntityPlayer) event.entity).getSoulHearts();
+            float soulDamage = damage * Config.soulDamageFactor;
+            float damageDiff = soulHearts - soulDamage;
+            if(damageDiff < 0)
+            {
+                ExtendedPlayer.get((EntityPlayer) event.entity).setSoulHearts(0);
+                event.ammount = (-1 * damageDiff) / Config.soulDamageFactor;
+            }
+            else
+            {
+                ExtendedPlayer.get((EntityPlayer) event.entity).setSoulHearts(damageDiff);
+                event.ammount = 0;
+            }
+        }
+    }
+
 }

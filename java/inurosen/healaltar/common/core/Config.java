@@ -11,6 +11,7 @@ public class Config
     public static Boolean enableRainAltar = false;
     public static Integer rainDuration = 3600;
     public static Integer thunderChance = 10;
+    public static Float soulDamageFactor = 2F;
 
     public static void init(File file)
     {
@@ -22,6 +23,7 @@ public class Config
         enableRainAltar = config.getBoolean("Enable altar of rain", "Rain Altar", false, "Enables summoning rain");
         rainDuration = config.getInt("Rain duration", "Rain Altar", 3600, 100, 24000, "Rain duration in ticks");
         thunderChance = config.getInt("Thunder chance", "Rain Altar", 10, 1, 100, "Chance to summon thunder instead of rain");
+        soulDamageFactor = config.getFloat("Soul Damage Multiplier", "Soul Hearts", 2, 1, 5, "Defines soul damage multiplier.");
         config.save();
     }
 }

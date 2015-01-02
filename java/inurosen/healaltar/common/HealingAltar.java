@@ -24,7 +24,7 @@ public class HealingAltar
 {
     public static final String NAME = "Healing Altar";
     public static final String MODID = "HealingAltar";
-    public static final String VERSION = "1.1";
+    public static final String VERSION = "1.1.3";
     public static long lastUse = 0;
     public static long lastRain = 0;
     public static Potion soulRegen;

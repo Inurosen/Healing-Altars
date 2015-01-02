@@ -63,6 +63,7 @@ public class EventHandler
         boolean validAltar = false;
         int tier = 1;
         long time = world.getWorldTime();
+
         long now = world.getTotalWorldTime();
         long diff;
         if( now < 10800 && ExtendedPlayer.get(player).lastRitual == 0)
@@ -73,8 +74,9 @@ public class EventHandler
         {
             diff = now - ExtendedPlayer.get(player).lastRitual;
         }
+        double fraction = ((double)time / 24000) % 1;
         Vec3 look = player.getLookVec();
-        if( !world.isRemote && diff >= 10800 && time >= 17500 && time <= 18500 && egg == Items.egg && look.yCoord == 1)
+        if( !world.isRemote && diff >= 10800 && fraction >= 0.743d && fraction <= 0.756d && egg == Items.egg && look.yCoord == 1)
         {
             int x = (int) Math.floor(player.posX);
             int y = (int) (player.posY - player.getYOffset()) - 1;

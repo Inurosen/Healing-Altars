@@ -132,6 +132,7 @@ public class EventHandler
                     EggProjectile eggShot = new EggProjectile( world, player.posX, y + 4, player.posZ, new Integer[]{x, y, z}, tier);
                     world.spawnEntityInWorld(eggShot);
                     eggShot.setVelocity(0, 1.5, 0);
+                    event.entityPlayer.getHeldItem().stackSize--;
                     event.setCanceled(true);
                 }
             }

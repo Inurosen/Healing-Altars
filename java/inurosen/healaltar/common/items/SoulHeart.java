@@ -1,7 +1,5 @@
 package inurosen.healaltar.common.items;
 
-import inurosen.healaltar.common.HealingAltar;
-import inurosen.healaltar.common.core.Config;
 import inurosen.healaltar.common.entity.ExtendedPlayer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,14 +25,14 @@ public class SoulHeart extends Item
     @Override
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
     {
-        if(!world.isRemote && !player.capabilities.isCreativeMode)
+        if (!world.isRemote && !player.capabilities.isCreativeMode)
         {
             float current = ExtendedPlayer.get(player).getSoulHearts();
-            if(current == 20)
+            if (current == 20)
             {
                 return stack;
             }
-            else if(current >= 20)
+            else if (current >= 20)
             {
                 ExtendedPlayer.get(player).setSoulHearts(20);
                 return stack;
@@ -49,6 +47,6 @@ public class SoulHeart extends Item
     @Override
     public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p4)
     {
-        list.add(EnumChatFormatting.ITALIC  + "Gives 1 soul heart");
+        list.add(EnumChatFormatting.ITALIC + "Gives 1 soul heart");
     }
 }

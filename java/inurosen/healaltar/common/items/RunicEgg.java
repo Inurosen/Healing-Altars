@@ -35,7 +35,7 @@ public class RunicEgg extends Item
     @SideOnly(Side.CLIENT)
     public IIcon getIconFromDamage(int p_77617_1_)
     {
-        if (isMidnight())
+        if (isItTime())
         {
             return iconArray[1];
         }
@@ -70,7 +70,7 @@ public class RunicEgg extends Item
                 diff = now - ExtendedPlayer.get(player).lastRitual;
             }
             Vec3 look = player.getLookVec();
-            if (!world.isRemote && diff >= 10800 && look.yCoord == 1 && isMidnight())
+            if (diff >= 10800 && look.yCoord == 1 && isItTime())
             {
                 int x = (int) Math.floor(player.posX);
                 int y = (int) (player.posY - player.getYOffset()) - 1;
@@ -134,7 +134,7 @@ public class RunicEgg extends Item
         return stack;
     }
 
-    protected boolean isMidnight()
+    protected boolean isItTime()
     {
         long time = Minecraft.getMinecraft().theWorld.getWorldTime();
         double fraction = ((double) time / 24000) % 1;

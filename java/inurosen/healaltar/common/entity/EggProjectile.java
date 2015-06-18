@@ -57,69 +57,77 @@ public class EggProjectile extends EntityThrowable
     @Override
     protected void onImpact(MovingObjectPosition obj)
     {
-        World world = worldObj;
-
-        if (!world.isRemote && coreBlock != null)
+        if (!this.worldObj.isRemote && coreBlock != null)
         {
             int x = coreBlock[0];
             int y = coreBlock[1];
             int z = coreBlock[2];
 
-            EntityLightning lightning = new EntityLightning(world, posX, posY - 1, posZ);
-            world.addWeatherEffect(lightning);
-            world.setBlock(x, y, z, Blocks.cobblestone);
-            if (tier == 2)
+            if(this.worldObj.getBlock(x, y, z) == Blocks.lapis_block)
             {
-                world.setBlockToAir(x - 1, y + 1, z - 1);
-                world.setBlockToAir(x + 1, y + 1, z - 1);
-                world.setBlockToAir(x - 1, y + 1, z + 1);
-                world.setBlockToAir(x + 1, y + 1, z + 1);
+                EntityLightning lightning = new EntityLightning(this.worldObj, posX, posY - 1, posZ);
+                this.worldObj.addWeatherEffect(lightning);
 
-                ItemStack[] drops = new ItemStack[]{new ItemStack(Items.rotten_flesh, 1, 0), new ItemStack(Items.dye, 1, 15)};
-                EntityItem flesh1 = new EntityItem(world, x - 1, y + 2, z - 1, drops[new Random().nextInt(drops.length)]);
-                flesh1.delayBeforeCanPickup = 25;
-                flesh1.fireResistance = 100;
-                flesh1.setVelocity(Helper.randRange(-.4F, .0F), .1F, Helper.randRange(-.4F, .0F));
-                world.spawnEntityInWorld(flesh1);
-
-                EntityItem flesh2 = new EntityItem(world, x + 1, y + 2, z - 1, drops[new Random().nextInt(drops.length)]);
-                flesh2.delayBeforeCanPickup = 25;
-                flesh2.fireResistance = 100;
-                flesh2.setVelocity(Helper.randRange(.0F, .4F), .1F, Helper.randRange(-.4F, .0F));
-                world.spawnEntityInWorld(flesh2);
-
-                EntityItem flesh3 = new EntityItem(world, x - 1, y + 2, z + 1, drops[new Random().nextInt(drops.length)]);
-                flesh3.delayBeforeCanPickup = 25;
-                flesh3.fireResistance = 100;
-                flesh3.setVelocity(Helper.randRange(-.4F, .0F), .1F, Helper.randRange(.0F, .4F));
-                world.spawnEntityInWorld(flesh3);
-
-                EntityItem flesh4 = new EntityItem(world, x + 1, y + 2, z + 1, drops[new Random().nextInt(drops.length)]);
-                flesh4.delayBeforeCanPickup = 25;
-                flesh4.fireResistance = 100;
-                flesh4.setVelocity(Helper.randRange(.0F, .4F), .1F, Helper.randRange(.0F, .4F));
-                world.spawnEntityInWorld(flesh4);
-
-            }
-            EntityPlayer player = world.getClosestPlayer(posX, posY - 2, posZ, 2);
-            if (player != null)
-            {
-                if (world.isThundering() && Config.thunderAmplify)
+                this.worldObj.setBlock(x, y, z, Blocks.cobblestone);
+                if (tier == 2)
                 {
-                    player.addPotionEffect(new PotionEffect(HealingAltar.soulRegen.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier + 1));
+                    this.worldObj.setBlockToAir(x - 1, y + 1, z - 1);
+                    this.worldObj.setBlockToAir(x + 1, y + 1, z - 1);
+                    this.worldObj.setBlockToAir(x - 1, y + 1, z + 1);
+                    this.worldObj.setBlockToAir(x + 1, y + 1, z + 1);
+
+                    ItemStack[] drops = new ItemStack[]{new ItemStack(Items.rotten_flesh, 1, 0), new ItemStack(Items.dye, 1, 15)};
+                    EntityItem flesh1 = new EntityItem(this.worldObj, x - 1, y + 2, z - 1, drops[new Random().nextInt(drops.length)]);
+                    flesh1.delayBeforeCanPickup = 25;
+                    flesh1.fireResistance = 100;
+                    flesh1.setVelocity(Helper.randRange(-.4F, .0F), .1F, Helper.randRange(-.4F, .0F));
+                    this.worldObj.spawnEntityInWorld(flesh1);
+
+                    EntityItem flesh2 = new EntityItem(this.worldObj, x + 1, y + 2, z - 1, drops[new Random().nextInt(drops.length)]);
+                    flesh2.delayBeforeCanPickup = 25;
+                    flesh2.fireResistance = 100;
+                    flesh2.setVelocity(Helper.randRange(.0F, .4F), .1F, Helper.randRange(-.4F, .0F));
+                    this.worldObj.spawnEntityInWorld(flesh2);
+
+                    EntityItem flesh3 = new EntityItem(this.worldObj, x - 1, y + 2, z + 1, drops[new Random().nextInt(drops.length)]);
+                    flesh3.delayBeforeCanPickup = 25;
+                    flesh3.fireResistance = 100;
+                    flesh3.setVelocity(Helper.randRange(-.4F, .0F), .1F, Helper.randRange(.0F, .4F));
+                    this.worldObj.spawnEntityInWorld(flesh3);
+
+                    EntityItem flesh4 = new EntityItem(this.worldObj, x + 1, y + 2, z + 1, drops[new Random().nextInt(drops.length)]);
+                    flesh4.delayBeforeCanPickup = 25;
+                    flesh4.fireResistance = 100;
+                    flesh4.setVelocity(Helper.randRange(.0F, .4F), .1F, Helper.randRange(.0F, .4F));
+                    this.worldObj.spawnEntityInWorld(flesh4);
+
                 }
-                else
+                EntityPlayer player = this.worldObj.getClosestPlayer(posX, posY - 2, posZ, 2);
+                if (player != null)
                 {
-                    player.addPotionEffect(new PotionEffect(HealingAltar.soulRegen.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier));
+                    if (this.worldObj.isThundering() && Config.thunderAmplify)
+                    {
+                        player.addPotionEffect(new PotionEffect(HealingAltar.soulRegen.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier + 1));
+                    }
+                    else
+                    {
+                        player.addPotionEffect(new PotionEffect(HealingAltar.soulRegen.id, Config.healDuration + (Config.healDuration - Config.healDuration / tier), Config.healAmplifier));
+                    }
+                }
+                for (int i = 0; i < 6; i++)
+                {
+                    EntityItem lapis = new EntityItem(this.worldObj, x + .5, y + 1.5, z + .5, new ItemStack(Items.dye, 1, 4));
+                    lapis.delayBeforeCanPickup = 25;
+                    lapis.fireResistance = 100;
+                    this.worldObj.spawnEntityInWorld(lapis);
+                    lapis.setVelocity(Helper.randRange(-.4F, .4F), .5, Helper.randRange(-.4F, .4F));
                 }
             }
-            for (int i = 0; i < 6; i++)
+            else
             {
-                EntityItem lapis = new EntityItem(world, x + .5, y + 1.5, z + .5, new ItemStack(Items.dye, 1, 4));
-                lapis.delayBeforeCanPickup = 25;
-                lapis.fireResistance = 100;
-                world.spawnEntityInWorld(lapis);
-                lapis.setVelocity(Helper.randRange(-.4F, .4F), .5, Helper.randRange(-.4F, .4F));
+                EntityItem runicEgg = new EntityItem(this.worldObj, x + .5, y + 1.5, z + .5, new ItemStack(HealingAltar.runicEgg, 1));
+                runicEgg.delayBeforeCanPickup = 25;
+                this.worldObj.spawnEntityInWorld(runicEgg);
             }
             this.setDead();
         }
